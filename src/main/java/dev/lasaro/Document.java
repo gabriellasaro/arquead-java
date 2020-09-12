@@ -7,8 +7,8 @@ import java.nio.file.Path;
 public class Document {
     private Path path;
 
-    public Document(String path) {
-        this.path = Path.of(path);
+    public Document(Path path) {
+        this.path = path;
     }
 
     private Path getPathByVersion(String version) {
