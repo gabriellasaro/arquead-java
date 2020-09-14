@@ -1,8 +1,8 @@
 package dev.lasaro;
 
 public final class ObjectId {
-    private String id;
-    private int version;
+    private final String id;
+    private final int version;
 
     public ObjectId(String id) {
         this.id = id;

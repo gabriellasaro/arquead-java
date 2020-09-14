@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Document {
-    private Path path;
+    private final Path path;
 
     public Document(Path path) {
         this.path = path;

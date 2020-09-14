@@ -1,23 +1,23 @@
 package dev.lasaro;
 
-public class Version {
-    private String version = "0.3.0";
-    private String releaseDate = "2020-09-01";
-    private String[] compatible = {"0.3.0"};
+public final class Version {
+    private static final String version = "0.3.0";
+    private static final String releaseDate = "2020-09-01";
+    private static final String[] compatible = {"0.3.0"};
 
     public String toString() {
         return version;
     }
 
-    public String getReleaseDate() {
+    public static String getReleaseDate() {
         return releaseDate;
     }
 
-    public String getVersion() {
+    public static String getVersion() {
         return version;
     }
 
-    public String[] getCompatible() {
+    public static String[] getCompatible() {
         return compatible;
     }
 }

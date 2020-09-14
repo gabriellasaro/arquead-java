@@ -1,8 +1,8 @@
 package dev.lasaro;
 
 public final class Error {
-    final private String message;
-    final private boolean err;
+    private final String message;
+    private final boolean err;
 
     public Error() {
         this.message = "Success";

@@ -3,10 +3,11 @@ package dev.lasaro;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
 public class Database {
-    private Path path;
+    final private Path path;
 
     public Database(String path) {
         this.path = Path.of(path);
@@ -24,19 +25,19 @@ public class Database {
         }
     }
 
-    public Error createCollection(String name) {
+    public Result<Path> createCollection(String name) {
         Path directoryCollection = this.path.resolve(name);
         if (Files.exists(directoryCollection)) {
-            return new Error("Já existe uma coleção com este nome.");
+            return new Result<>("Já existe uma coleção com este nome.");
         }
 
         try {
             Files.createDirectory(directoryCollection);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Error("Erro ao criar diretório para coleção.");
+            return new Result<>("Erro ao criar diretório para coleção.");
         }
-        return new Error();
+        return new Result<>(directoryCollection);
     }
 
     public Error createDatabase() {
@@ -51,11 +52,20 @@ public class Database {
             return new Error("Não foi possível criar este diretório.");
         }
 
-        Error err = this.createCollection("_arquea");
-        if (err.isSuccess()) {
-            // criar documento.
+        Result<Path> newCollection = this.createCollection("_arquea");
+        if (newCollection.isSuccess()) {
+            Collection collection = new Collection(newCollection.getData());
+
+            HashMap<String, Object> conf = new HashMap<>();
+            conf.put("id", "conf");
+            conf.put("version", Version.getVersion());
+
+            Result<ObjectId> doc = collection.insert(conf);
+            if (doc.isError()) {
+                return new Error(doc.getMessage());
+            }
             return new Error();
         }
-        return err;
+        return new Error(newCollection.getMessage());
     }
 }

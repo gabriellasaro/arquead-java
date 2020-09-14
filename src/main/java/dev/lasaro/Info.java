@@ -1,10 +1,9 @@
 package dev.lasaro;
 
-public class Info {
-    private Version version = new Version();
-    private String name = "ArqueaD";
-    private String repository = "https://github.com/gabriellasaro/arquead-java";
-    private String website = "https://arquead.lasaro.dev";
+public final class Info {
+    private final String name = "ArqueaD";
+    private final String repository = "https://github.com/gabriellasaro/arquead-java";
+    private final String website = "https://arquead.lasaro.dev";
 
     public String getName() {
         return name;
@@ -19,7 +18,7 @@ public class Info {
     }
 
     public String getRelease() {
-        return String.format("%s v%s %s", name, version.getVersion(), version.getReleaseDate());
+        return String.format("%s v%s %s", name, Version.getVersion(), Version.getReleaseDate());
     }
 
     public void help() {
@@ -33,8 +32,8 @@ public class Info {
     }
 
     public void showCompatible() {
-        System.out.println("Lista de banco de dados compatíveis com a versão corrente (" + this.version.getVersion() + "):");
-        for (String version : this.version.getCompatible()) {
+        System.out.println("Lista de banco de dados compatíveis com a versão corrente (" + Version.getVersion() + "):");
+        for (String version : Version.getCompatible()) {
             System.out.println("\t" + version);
         }
     }
