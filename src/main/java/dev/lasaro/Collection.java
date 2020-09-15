@@ -1,13 +1,8 @@
 package dev.lasaro;
 
-import com.google.gson.Gson;
-
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -53,12 +48,9 @@ public class Collection {
             return new Result<>("Não foi possível criar este diretório.");
         }
 
-        Path path = Paths.get(documentDirectory.resolve("1.json").toString());
-        try(BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)){
-            Gson gson = new Gson();
-            writer.write(gson.toJson(data));
-        } catch(IOException ex){
-            ex.printStackTrace();
+        try {
+            Util.saveFileToJson(documentDirectory.resolve("1.json").toString(), data);
+        } catch (IOException e) {
             Util.deleteDirectory(documentDirectory);
             return new Result<>("Erro ao criar arquivo!");
         }
