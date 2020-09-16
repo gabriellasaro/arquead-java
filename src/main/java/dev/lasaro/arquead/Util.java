@@ -1,4 +1,4 @@
-package dev.lasaro;
+package dev.lasaro.arquead;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

@@ -1,4 +1,4 @@
-package dev.lasaro;
+package dev.lasaro.arquead;
 
 import java.io.IOException;
 import java.nio.file.Files;

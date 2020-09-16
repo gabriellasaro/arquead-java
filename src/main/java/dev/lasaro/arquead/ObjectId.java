@@ -1,4 +1,4 @@
-package dev.lasaro;
+package dev.lasaro.arquead;
 
 public final class ObjectId {
     private final String id;

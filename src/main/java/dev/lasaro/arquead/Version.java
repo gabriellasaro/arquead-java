@@ -1,4 +1,4 @@
-package dev.lasaro;
+package dev.lasaro.arquead;
 
 public final class Version {
     private static final String version = "0.3.0";
