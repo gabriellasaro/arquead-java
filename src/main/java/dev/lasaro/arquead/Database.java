@@ -25,47 +25,39 @@ public class Database {
         }
     }
 
-    public Result<Path> createCollection(String name) {
+    public Path createCollection(String name) {
         Path directoryCollection = this.path.resolve(name);
         if (Files.exists(directoryCollection)) {
-            return new Result<>("Já existe uma coleção com este nome.");
+            throw new ArqueadException("Já existe uma coleção com este nome.");
         }
 
         try {
             Files.createDirectory(directoryCollection);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Result<>("Erro ao criar diretório para coleção.");
+            throw new ArqueadException("Erro ao criar diretório para coleção.");
         }
-        return new Result<>(directoryCollection);
+        return directoryCollection;
     }
 
-    public Error createDatabase() {
+    public void createDatabase() throws IOException {
         if (Files.exists(this.path)) {
-            return new Error("Já existe um diretório com este nome.");
+            throw new ArqueadException("Já existe um diretório com este nome.");
         }
 
         try {
             Files.createDirectory(this.path);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Error("Não foi possível criar este diretório.");
+            throw new ArqueadException("Não foi possível criar este diretório.");
         }
 
-        Result<Path> newCollection = this.createCollection("_arquea");
-        if (newCollection.isSuccess()) {
-            Collection collection = new Collection(newCollection.getData());
+        Path newCollection = this.createCollection("_arquea");
+        Collection collection = new Collection(newCollection);
 
-            HashMap<String, Object> conf = new HashMap<>();
-            conf.put("id", "conf");
-            conf.put("version", Version.getVersion());
-
-            Result<ObjectId> doc = collection.insert(conf);
-            if (doc.isError()) {
-                return new Error(doc.getMessage());
-            }
-            return new Error();
-        }
-        return new Error(newCollection.getMessage());
+        HashMap<String, Object> conf = new HashMap<>();
+        conf.put("id", "conf");
+        conf.put("version", Version.getVersion());
+        collection.insert(conf);
     }
 }

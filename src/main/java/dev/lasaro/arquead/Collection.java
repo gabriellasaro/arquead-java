@@ -26,7 +26,7 @@ public class Collection {
         }
     }
 
-    public Result<ObjectId> insert(HashMap<String, Object> data) {
+    public ObjectId insert(HashMap<String, Object> data) throws IOException {
         ObjectId objectId;
         if (!data.containsKey("id")) {
             objectId = new ObjectId(UUID.randomUUID().toString());
@@ -38,23 +38,18 @@ public class Collection {
         Path documentDirectory = this.path.resolve(objectId.getId());
 
         if (Files.exists(documentDirectory)) {
-            return new Result<>("Já existe um documento com este ID.");
+            throw new ArqueadException("Já existe um documento com este ID.");
         }
 
-        try {
-            Files.createDirectory(documentDirectory);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Result<>("Não foi possível criar este diretório.");
-        }
+       Files.createDirectory(documentDirectory);
 
         try {
             Util.saveFileToJson(documentDirectory.resolve("1.json").toString(), data);
         } catch (IOException e) {
             Util.deleteDirectory(documentDirectory);
-            return new Result<>("Erro ao criar arquivo!");
+            throw new ArqueadException("Erro ao criar arquivo!");
         }
 
-        return new Result<>(objectId);
+        return objectId;
     }
 }
