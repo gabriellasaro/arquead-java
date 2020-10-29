@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class Collection {
+public final class Collection {
     private final Path path;
 
     public Collection(Path path) {
