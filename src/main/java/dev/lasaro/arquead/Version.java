@@ -2,7 +2,7 @@ package dev.lasaro.arquead;
 
 public final class Version {
     private static final String version = "0.1.0";
-    private static final String releaseDate = "2020-10-29";
+    private static final String releaseDate = "2020-12-14";
     private static final String[] compatible = {"0.1.0"};
 
     @Override

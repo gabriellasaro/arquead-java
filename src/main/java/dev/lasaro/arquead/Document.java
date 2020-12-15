@@ -32,7 +32,7 @@ public final class Document {
 
     public ObjectId getObjectId() {
         String basename = this.getPathToCurrentVersion().getFileName().toString();
-        int version = Integer.parseInt(basename.substring(0, basename.length()-5));
+        int version = Integer.parseInt(basename.substring(0, basename.length() - 5));
 
         return new ObjectId(this.path.getFileName().toString(), version);
     }

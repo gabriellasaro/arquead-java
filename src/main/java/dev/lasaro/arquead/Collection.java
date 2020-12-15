@@ -27,29 +27,23 @@ public final class Collection {
     }
 
     public ObjectId insert(HashMap<String, Object> data) throws IOException {
-        ObjectId objectId;
-        if (!data.containsKey("id")) {
-            objectId = new ObjectId(UUID.randomUUID().toString());
-        } else {
-            objectId = new ObjectId(data.get("id").toString().replaceAll(" ", "_"));
-        }
-        data.put("id", objectId.getId());
+        String id = (String) data.computeIfAbsent("id", v -> v = UUID.randomUUID().toString());
 
-        Path documentDirectory = this.path.resolve(objectId.getId());
+        Path documentDirectory = this.path.resolve(id);
 
         if (Files.exists(documentDirectory)) {
             throw new ArqueadException("Já existe um documento com este ID.");
         }
 
-       Files.createDirectory(documentDirectory);
+        Files.createDirectory(documentDirectory);
 
         try {
-            Util.saveFileToJson(documentDirectory.resolve("1.json").toString(), data);
+            Util.saveFileToJson(documentDirectory.resolve("1.json"), data);
         } catch (IOException e) {
             Util.deleteDirectory(documentDirectory);
             throw new ArqueadException("Erro ao criar arquivo!");
         }
 
-        return objectId;
+        return new ObjectId(id);
     }
 }

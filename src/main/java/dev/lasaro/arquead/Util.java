@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 
 public final class Util {
@@ -24,11 +23,11 @@ public final class Util {
         }
     }
 
-    public static void saveFileToJson(String docDirectory, Object data) throws IOException {
-        Path path = Paths.get(docDirectory);
+    public static void saveFileToJson(Path path, Object data) throws IOException {
         BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
         Gson gson = new Gson();
         writer.write(gson.toJson(data));
+        writer.close();
     }
 
     public static Object readFileToJson(Path docDirectory) throws IOException {
